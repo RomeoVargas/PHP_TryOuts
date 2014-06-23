@@ -1,6 +1,6 @@
 <h1>Regular Expressions</h1>
 <?php
-function say($what){
+function say($what = NULL){
 	echo $what . "<br/>";
 }
 $romzSong = <<<Romz
@@ -48,7 +48,41 @@ say(preg_match('/([a-zA-Z]...)/', $romzSong, $array)); // parenthesis describes 
 print_r($array);
 
 echo "<hr/><h3>Quantifiers and Greed</h3>";
-say(preg_match('/<(.*?)\/>/', $romzSong, $word)); // parenthesis describes a subpattern
+say(preg_match('/<(.*?)\/>/', $romzSong, $word)); // adding a ? at the end of a quantifier search for a word instead a whole line
 print_r($word);
+
+echo "<hr/><h3>Noncapturing Groups</h3>";
+say(preg_match('/(?:romz)(.*)/', $romzSong, $word)); // using the ?: syntax makes the array capture the complement of the pattern after :?
+print_r($word);
+
+echo "<hr/><h3>Backreferences</h3>";
+say(preg_match('/(romz)*\1/', $romzSong, $word)); // uses the \number pattern to backreference
+print_r($word);
+
+echo "<hr/><h3>Trailing Options</h3>";
+say(preg_match('/(ROMZ)*\1/i', $romzSong, $word)); // /i flag makes the search case-sensitive
+print_r($word);
+
+echo "<hr/><h3>Inline Options</h3>";
+say(preg_match('/(?i:(ROMZ)*\1)/', $romzSong, $word)); // same as before but uses ? to indicate the flag and : for the subpattern
+print_r($word);
+say();
+say(preg_match('/(?-i:(ROMZ)*\1)/', $romzSong, $word)); // - turns the flag off
+print_r($word);
+
+echo "<hr/><h3>Lookahead and Lookbehind</h3>";
+$input = <<< END
+name = 'Tim O\'Reilly';
+END;
+$pattern = <<< END
+'			# opening quote
+(			# begin capturing
+.*?			# the string
+(?<! \\\\ ) # skip escaped quotes
+)			# end capturing
+'			# closing quote
+END;
+preg_match( "($pattern)x", $input, $match);
+echo $match[0];
 
 ?>
