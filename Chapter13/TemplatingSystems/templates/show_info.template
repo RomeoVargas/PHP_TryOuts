@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Registered Info</title>
+		<style>
+			body{
+				font-family: Helvetica, Arial;
+				background-color:#FFC92A;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<h1>Registered Info</h1>
+			First Name: {fname}<br/>
+			Middle Name: {mname}<br/>
+			Last Name: {lname}<br/>
+		</center>
+	</body>
+</html>
